@@ -4,7 +4,7 @@ using namespace std;
 void debug(deque<int> q)
 {
     deque<int>::iterator i;
-    for (i = q.begin(); i <= q.end(); i++)
+    for (i = q.begin(); i != q.end(); i++)
         cout << *i << " ";
     cout << endl;
     return;
@@ -20,16 +20,14 @@ int main()
     if (a.empty() == false)
     {                     // empty函数返回一个bool值，用以确定容器非空
         a.push_back(101); // push_back函数在队列尾部插入一个元素
-        a.pop_back();
-        debug(a);          // pop_back函数在队列尾弹出一个元素
+        a.pop_back();          // pop_back函数在队列尾弹出一个元素
         a.push_front(102); // push_front函数在队列头插入一个元素
         a.pop_front();     // pop_front函数在队列头弹出一个元素
-        debug(a);
-        debug(b);
         b.clear();  // 清空b容器中的所有元素
         swap(a, b); // 交换a,b容器中的内容
     }
-    for (i = b.begin(); i <= b.end(); i++)
+    debug(b);
+    for (i = b.begin(); i != b.end(); i++)
         cout << *i << " ";
     cout << endl;
     return 0;
