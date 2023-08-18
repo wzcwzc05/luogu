@@ -1,24 +1,57 @@
-#include <string>
 #include <iostream>
+#include <queue>
+#include <vector>
+
 using namespace std;
-int main()
-{
-    string str("HelloWorld");
-    string str1("iloveyou");
-    int len=str.length(); // 返回str字符串的长度
-    str.append(str1, 3, 4); // 将str1字符串的第三个位置开始的四个字符添加到str字符串的末尾
 
-    int pos1 = str.find("Hello");   // 返回str1字符串"Hello"中第一次出现的位置
-    int pos2 = str.find("love", 1); // 返回str1字符串从第二个位置开始查找"love"中第一次出现的位置
+int main() {
+    int t;
+    cin >> t;
 
-    str.replace(1, 3, "love"); // 将str字符串从第二个位置开始的三个字符替换为"love"
+    while (t--) {
+        int n;
+        cin >> n;
 
-    str.erase(1, 3); // 将str字符串从第二个位置开始的三个字符删除
+        vector<priority_queue<int, vector<int>, greater<int>>> arrays(n);
+        for (int i = 0; i < n; ++i) {
+            int m;
+            cin >> m;
+            for (int j = 0; j < m; ++j) {
+                int num;
+                cin >> num;
+                arrays[i].push(num);
+            }
+        }
 
-    str.insert(1, "love"); // 将"love"插入到str字符串的第二个位置
-    str.insert(5, 2, 'a'); // 将两个'a'插入到str字符串的第六个位置
+        long long initialBeauty = 0;
+        priority_queue<int, vector<int>, greater<int>> minValues;
 
-    string str3=str.substr(1,3); // 返回str字符串从第二个位置开始的三个字符
+        for (int i = 0; i < n; ++i) {
+            initialBeauty += arrays[i].top();
+            minValues.push(arrays[i].top());
+            arrays[i].pop();
+        }
+
+        long long finalBeauty = initialBeauty;
+
+        while (!minValues.empty()) {
+            int minVal = minValues.top();
+            minValues.pop();
+
+            for (int i = 0; i < n; ++i) {
+                if (!arrays[i].empty()) {
+                    int newVal = arrays[i].top();
+                    if (newVal < minVal) {
+                        finalBeauty += newVal - minVal;
+                        minValues.push(newVal);
+                        arrays[i].pop();
+                    }
+                }
+            }
+        }
+
+        cout << finalBeauty << endl;
+    }
 
     return 0;
 }
