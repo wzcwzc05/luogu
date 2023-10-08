@@ -1,12 +1,18 @@
 #include <stdio.h>
+void PrintN(int N);
 int main()
 {
-    int x,y=1;
-    if (x=y){
-        printf("yes");
-    }
-    else {
-        printf("no");
-    }
+    int N;
+    scanf("%d", &N);
+    PrintN(N);
     return 0;
+}
+
+void PrintN(int N)
+{
+    int i = 1;
+    for (i = 1; i <= N; i++)
+    {
+        printf("%d\n", i);
+    }
 }
