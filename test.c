@@ -1,18 +1,8 @@
 #include <stdio.h>
-void PrintN(int N);
 int main()
 {
-    int N;
-    scanf("%d", &N);
-    PrintN(N);
+    const int 0Xab;
+    int x = 11, y = 12, z = 0;
+    printf("%d\n%d\n%d\n%d\n", z = (x == y), (z = x, y), z = (x, y), (x, y, z));
     return 0;
-}
-
-void PrintN(int N)
-{
-    int i = 1;
-    for (i = 1; i <= N; i++)
-    {
-        printf("%d\n", i);
-    }
 }
