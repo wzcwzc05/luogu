@@ -1,8 +1,25 @@
-#include <stdio.h>
+#include<stdio.h>
 int main()
 {
-    const int 0Xab;
-    int x = 11, y = 12, z = 0;
-    printf("%d\n%d\n%d\n%d\n", z = (x == y), (z = x, y), z = (x, y), (x, y, z));
+    int x;
+    scanf("%d",&x);
+    int i;
+    int isprime=1;
+    for(i=2;i<x;i++)
+    {
+        if(x%i==0)
+        {
+            isprime=0;
+            break;
+        }
+    } 
+     if(isprime==1)
+     {
+         printf("是素数\n");
+     }
+     else
+     {
+         printf("不是素数\n");
+     }
     return 0;
 }
