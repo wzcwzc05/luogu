@@ -1,25 +1,12 @@
-#include<stdio.h>
+#include <stdio.h>
 int main()
 {
-    int x;
-    scanf("%d",&x);
-    int i;
-    int isprime=1;
-    for(i=2;i<x;i++)
-    {
-        if(x%i==0)
-        {
-            isprime=0;
-            break;
-        }
-    } 
-     if(isprime==1)
-     {
-         printf("是素数\n");
-     }
-     else
-     {
-         printf("不是素数\n");
-     }
+    char a[255];
+    int i = 0, k = 0;
+    for (i = 0; scanf("%c", &a[i]) != EOF; i++)
+        ;
+    for (k = i; k >= 0; k--)
+        printf("%c", a[k]);
+    printf("\n");
     return 0;
 }

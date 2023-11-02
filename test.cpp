@@ -1,30 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-bool isPower(ll x, ll p)
-{
-    ll last, num = 0;
-    if (x <= 0)
-        return false;
-    while (x != 0)
-    {
-        last = x % p;
-        if (last != 1 && last != 0)
-            return false;
-        else if (last == 1)
-            if (num != 0)
-                return false;
-            else
-                num = 1;
-
-        x = x / p;
-    }
-    return true;
-}
+const int N = 2e5 + 10;
+ll n, a[N], sum;
+bool vis[N];
 int main()
 {
-    int n, a = 1, s = 0, m;
-    cin >> n >> m;
-    cout << isPower(n, m) << endl;
+    cin >> n;
+    for (int i = 1; i <= n; i++)
+        cin >> a[i];
+    for (int i = 1; i <= n; i++)
+    {
+        ll t, x, y;
+        cin >> t;
+        vis[t] = 1;
+        bool flag1 = 1;
+        for (int j = t; j >= 1; j--)
+            if (vis[j] == 0)
+            {
+                flag1 = 0;
+                x = a[j];
+                break;
+            }
+        bool flag2 = 1;
+        for (int j = t; j <= n; j++)
+            if (vis[j] == 0)
+            {
+                flag2 = 0;
+                y = a[j];
+                break;
+            }
+        if (flag1 == 0 && flag2 == 0)
+            sum += abs(x - y) * abs(x - y);
+    }
+    cout << sum << "\n";
     return 0;
 }
