@@ -36,6 +36,7 @@ int main()
         st3[i] = transfer(st1[i]);
     }
     char ch = st3[0];
+    bool flag=false;
     for (ll i = 0; i <= n; i++)
     {
         if (ch == st2[i])
@@ -43,8 +44,14 @@ int main()
             if (check(i))
             {
                 ans = min(ans, min(i - 1, n - i + 1));
+                flag = true;
             }
         }
+    }
+    if (flag==1)
+    {
+        cout<<"Yes\n";
+        cout<<ans<<"\n";
     }
     return 0;
 }

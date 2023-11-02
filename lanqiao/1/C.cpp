@@ -28,7 +28,7 @@ int main()
     for (int i = 1; i <= n; i++)
         cin >> a[i];
     sort(a + 1, a + n + 1);
-    l = 0;
+    l = -1;
     r = a[n] - a[1];
     ans = 0;
     while (l + 1 != r)
