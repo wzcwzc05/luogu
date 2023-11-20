@@ -5,6 +5,7 @@ int main()
 {
     cin >> n;
     cin >> b;
+    int first = b;
     for (int i = 2; i <= n; i++)
     {
         cin >> a;
@@ -12,6 +13,6 @@ int main()
             ans += a - b;
         b = a;
     }
-    cout << ans << endl;
+    cout << ans + first << endl;
     return 0;
 }

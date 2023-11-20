@@ -1,24 +1,38 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const ll N = 2e5 + 10;
-ll n, q, a[N], prefix1[N], sum, l, r, prefix2[N];
+const int N = 1e5;
 int main()
 {
-    cin >> n >> q;
-    for (int i = 1; i <= n; i++)
-    {
-        cin >> a[i];
-        prefix1[i] = prefix1[i - 1] + a[i];
-        prefix2[i] = prefix2[i - 1] + a[i] * a[i];
-    }
+    int q;
+    cin >> q;
     while (q--)
     {
-        cin >> l >> r;
-        ll t = prefix1[r] - prefix1[l - 1];
-        ll t2 = prefix2[r] - prefix2[l - 1];
-        sum = (t * t - t2) / 2;
-        cout << sum << "\n";
+        string st;
+        cin >> st;
+        int n, l;
+        n = st.size() - 1;
+        l = n;
+        bool flag = true;
+        for (int i = 0; i <= n; i++)
+        {
+            if (st[i] >= 'a' && st[i] <= 'z')
+                st[i] -= 'a' - 'A';
+        }
+        for (int i = 0; i <= n; i++)
+        {
+            // cout<<st[i]<<" "<<st[l]<<"\n";
+            if (st[i] == st[l])
+            {
+                flag = false;
+                break;
+            }
+            l--;
+        }
+        if (flag == true)
+            cout << "YES\n";
+        else
+            cout << "NO\n";
     }
     return 0;
 }

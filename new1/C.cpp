@@ -1,32 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
-using ll = long long;
-ll n, m, t, ag, au, cu;
-string temp, team;
-ll penlty[1000];
-ll win[1000];
-bool vis[1000][500];
+const int N = 1e5;
 int main()
 {
-    cin >> n >> m >> au >> ag >> cu;
-    for (int i = 1; i <= n; i++)
+    int q;
+    cin >> q;
+    while (q--)
     {
-        cin >> team;
-        for (int j = 1; j <= m; j++)
+        long long ans = 0;
+        long long n, k, t;
+        bool flag = 0;
+        cin >> n >> k;
+        long long x = n / k;
+        /*if (k==1)
         {
-            cin >> t;
-            int time;
-            string status;
-            for (int k = 1; k <= t; k++)
-            {
-                cin >> time >> status;
-                if (status == "AC" && vis[i][j] == 0)
-                {
-                    vis[i][j] = 1;
-                    win[i]++;
-                }
-            }
-        }
+            cout<<n<<"\n";
+            continue;
+        }*/
+        ans = (n + 1) * x - ((k + (k + k * (x - 1))) * x / 2);
+        ans = ans * 2;
+        if (k == 1)
+            ans = ans - n;
+        /*while (flag==0)
+        {
+            ans+=(n-t+1)*2;
+            t+=k;
+            if (n-t+1<=0)
+                flag=1;
+        }*/
+        cout << ans << "\n";
     }
     return 0;
 }
