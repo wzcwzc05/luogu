@@ -4,7 +4,7 @@
 char get_first(void);
 int main(void)
 {
-    double a, b, out;
+    float a, b, out;
     char ch;
     while ((ch = get_first()) != 'q')
     {
