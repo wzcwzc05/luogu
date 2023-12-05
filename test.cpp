@@ -1,35 +1,65 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const ll N = 1e8 + 10;
-double fun(int n, double x)
+const ll N = 1e2 + 10;
+int mp[N][N], n, m, k, ans;
+bool vis[N][N];
+bool check(int x, int y)
 {
-    double s = 0;
-    for (int i = 2; i <= n; i++)
+    bool flag = false;
+    for (int i = 1; i <= n; i++)
+        if (mp[i][y] == 1)
+            return false;
+    for (int i = 1; i <= m; i++)
+        if (mp[x][i] == 1)
+            return false;
+    for (int i = x, j = y; i <= n && j <= m; i++, j++)
+        if (mp[i][j] == 1)
+            return false;
+    for (int i = x, j = y; i >= 1 && j >= 1; i--, j--)
+        if (mp[i][j] == 1)
+            return false;
+    for (int i = x, j = y; i <= n && j >= 1; i++, j--)
+        if (mp[i][j] == 1)
+            return false;
+    for (int i = x, j = y; i >= 1 && j <= m; i--, j++)
+        if (mp[i][j] == 1)
+            return false;
+    return true;
+}
+void print()
+{
+    for (int i = 1; i <= n; i++, cout << "\n")
+        for (int j = 1; j <= m; j++)
+            cout << mp[i][j] << " ";
+    cout << "\n";
+}
+void dfs(int dep, int c)
+{
+    if (dep == k)
     {
-        bool flag = true;
-        for (int j = 2; j * j <= i; j++)
+        ans++;
+        return;
+    }
+    if (c > n)
+    {
+        return;
+    }
+    for (int i = 1; i <= m; ++i)
+    {
+        if (check(c, i))
         {
-            if (i % j == 0)
-            {
-                flag = false;
-                break;
-            }
-        }
-        if (flag)
-        {
-            cout << x << " " << i * 1.0 << endl;
-            s += x / (i * 1.0);
-            x *= x;
+            mp[c][i] = 1;
+            dfs(dep + 1, c + 1);
+            mp[c][i] = 0;
         }
     }
-    return s;
+    dfs(dep, c + 1);
 }
 int main()
 {
-    int n;
-    double s;
-    cin >> n >> s;
-    printf("%.4lf\n", fun(n, s));
+    cin >> n >> m >> k;
+    dfs(0, 1);
+    cout << ans << "\n";
     return 0;
 }
