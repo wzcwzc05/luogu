@@ -1,32 +1,48 @@
 #include <bits/stdc++.h>
 using namespace std;
-const int N = 2e5 + 10;
-int n, m, q, a[N], k, maxx[N], minn[N];
-priority_queue<int, vector<int>, greater<int>> stk_min;
-priority_queue<int, vector<int>, less<int>> stk_max;
+using ll = long long;
+const ll N = 1e6 + 10;
+ll n, t, a[N];
+deque<ll> dqmax, dqmin;
+vector<ll> ansmax, ansmin;
 int main()
 {
     ios::sync_with_stdio(0), cin.tie(0), cout.tie(0);
-    cin >> n >> k;
-    for (int i = 1; i <= n; ++i)
+    cin >> n >> t;
+    for (int i = 1; i <= n; i++)
         cin >> a[i];
-    for (int i = 1; i <= k; ++i)
-        stk_min.push(a[i]), stk_max.push(a[i]);
-    maxx[1] = stk_max.top(), minn[1] = stk_min.top();
-    for (int i = 2; i <= n - k + 1; ++i)
+    dqmax.push_back(1), dqmin.push_back(1);
+    for (int i = 2; i <= t; i++)
     {
-        if (a[i - 1] == stk_min.top())
-            cout << stk_min.top() << "min \n", stk_min.pop();
-        if (a[i - 1] == stk_max.top())
-            cout << stk_max.top() << "max \n", stk_max.pop();
-        stk_min.push(a[k + i - 1]), stk_max.push(a[k + i - 1]);
-        maxx[i] = stk_max.top(), minn[i] = stk_min.top();
+        while (!dqmax.empty() && a[dqmax.back()] < a[i])
+            dqmax.pop_back();
+        while (!dqmin.empty() && a[dqmin.back()] > a[i])
+            dqmin.pop_back();
+        dqmax.push_back(i);
+        dqmin.push_back(i);
     }
-    for (int i = 1; i <= n - k + 1; ++i)
-        cout << maxx[i] << " ";
+    ansmax.push_back(a[dqmax.front()]);
+    ansmin.push_back(a[dqmin.front()]);
+    for (int i = t + 1, k = 2; i <= n; i++, k++)
+    {
+        while (!dqmax.empty() && (dqmax.front() > i || dqmax.front() < k))
+            dqmax.pop_front();
+        while (!dqmin.empty() && (dqmin.front() > i || dqmin.front() < k))
+            dqmin.pop_front();
+        while (!dqmax.empty() && a[dqmax.back()] <= a[i])
+            dqmax.pop_back();
+        while (!dqmin.empty() && a[dqmin.back()] >= a[i])
+            dqmin.pop_back();
+        dqmax.push_back(i);
+        dqmin.push_back(i);
+        ansmax.push_back(a[dqmax.front()]);
+        ansmin.push_back(a[dqmin.front()]);
+    }
+    for (auto i = ansmin.begin(); i != ansmin.end(); i++)
+        cout << *i << " ";
     cout << "\n";
-    for (int i = 1; i <= n - k + 1; ++i)
-        cout << minn[i] << " ";
+    for (auto i = ansmax.begin(); i != ansmax.end(); i++)
+        cout << *i << " ";
     cout << "\n";
     return 0;
 }

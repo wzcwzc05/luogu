@@ -13,7 +13,7 @@
             "cStandard": "c17",
             "cppStandard": "gnu++14",
             "intelliSenseMode": "windows-gcc-x64",
-            "compilerPath": "D:\\TDM-GCC-64\\bin\\g++.exe"
+            "compilerPath": "D:\\TDM-GCC-64\\bin\\gcc.exe"
         }
     ],
     "version": 4
