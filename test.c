@@ -4,16 +4,9 @@
 int n, hash[10001];
 int main()
 {
-    scanf("%d", &n);
-    for (int i = 1; i <= n; i++)
-    {
-        int temp;
-        scanf("%d", &temp);
-        hash[temp]++;
-    }
-    for (int i = 1; i <= 10000; i++)
-        if (hash[i])
-            printf("%d ", i);
-    printf("\n");
+    int a[1000];
+    scanf("%d", a + 1);
+    scanf("%d", &a[2]);
+    printf("%d\n%d\n", a[1], a[2]);
     return 0;
 }

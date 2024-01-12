@@ -1,6 +1,7 @@
 .vscode/settings.json
 .vscode/tasks.json
-
+*.in
+*.out
 *.exe
 .vscode
 *.zip
