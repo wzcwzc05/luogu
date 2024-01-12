@@ -5,3 +5,5 @@
 *.exe
 .vscode
 *.zip
+*.in
+*.out
