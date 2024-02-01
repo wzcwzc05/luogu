@@ -1,4 +1,4 @@
-#include <bits/stdc++.h>
+#include <iostream>
 using namespace std;
 using ll = long long;
 const ll N = 1e3 + 10;

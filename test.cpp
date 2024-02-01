@@ -1,10 +1,24 @@
-#include <bits/stdc++.h>
-using namespace std;
+#include<stdio.h>
+#include<stdlib.h>
+#include<string.h>
+
+struct stud
+{
+    int num;
+    struct stud*next;
+ };
 int main()
 {
-    double a = 1.1234;
-    double b = 1.2345;
-    cout << fixed << setprecision(6) << a << endl;
-    cout << defaultfloat << setprecision(6) << b << endl;
-    return 0;
+    struct stud*p,*head=NULL;
+    do{
+        p = (struct stud*)malloc(sizeof(struct stud));
+        scanf("%d ",&p->num);
+        p->next=head;
+        head=p;
+    }
+    while(p->num!=-1);
+    
+    for(p = head;p!=NULL;p=p->next)
+        printf("%d\n",p->num);
+return 0;
 }
