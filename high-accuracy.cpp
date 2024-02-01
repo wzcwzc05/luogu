@@ -5,7 +5,6 @@ int result[1000010], n;
 int main()
 {
     cin >> st1 >> st2;
-
     // 反转字符串
     reverse(st1.begin(), st1.end());
     reverse(st2.begin(), st2.end());
