@@ -32,6 +32,7 @@ int main()
         int c = i * 3;
         if (check(i, b, c))
             cout << i << " " << b << " " << c << "\n";
+
     }
     return 0;
 }
