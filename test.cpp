@@ -1,22 +1,11 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-
-typedef struct stud {
-    int num;
-    struct stud* next;
-} stud;
+#include <cstdio>
 int main()
 {
-    struct stud *p, *head = NULL;
-    do {
-        p = (struct stud*)malloc(sizeof(struct stud));
-        scanf("%d ", &p->num);
-        p->next = head;
-        head = p;
-    } while (p->num != -1);
-
-    for (p = head; p != NULL; p = p->next)
-        printf("%d\n", p->num);
+    for (int i = 1; i <= 100; ++i)
+        if (i == 100) {
+            int sum = 100;
+            int& p=sum;
+        }
+    printf("%d\n", p); // p悬空
     return 0;
 }
