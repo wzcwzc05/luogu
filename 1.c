@@ -1,33 +1,25 @@
-#define _CRT_SECURE_NO_WARNINGS
 #include <stdio.h>
-#include <malloc.h>
 #include <string.h>
-int *Insert(int x, int *a, int *n)
-{
-    a = (int *)realloc(a, sizeof(int) * (*n + 1));
-    int i = 0;
-    for (i = 0; i < *n && a[i] <= x; ++i)
-        ;
-    *n += 1;
-    for (int j = *n - 1; j >= i + 1; --j)
-        a[j] = a[j - 1];
-    a[i] = x;
-    return a;
-}
-void Write(int a[], int n)
-{
-    for (int i = 0; i < n; i++)
-        printf("%d ", a[i]);
-    printf("\n");
-}
-int main()
-{
-    int x, n = 0, *a = NULL;
-    do
-    {
-        scanf("%d", &x);
-    } while ((x >= 0) && (a = Insert(x, a, &n)));
-    Write(a, n);
-    free(a);
+int main() {
+    char str[10001];
+    gets(str);
+    int n = strlen(str);
+    for (int i = 0; i < n;) {
+        if ((unsigned char)str[i] >= 0x80) {
+            if (str[i] * 256 + str[i + 1] !=
+                str[n - 1 - i] + str[n - i - 2] * 256) {
+                printf("NO\n");
+                return 0;
+            }
+            i += 2;
+        } else {
+            if (str[i] != str[n - 1 - i]) {
+                printf("NO\n");
+                return 0;
+            }
+            i += 1;
+        }
+    }
+    printf("YES\n");
     return 0;
 }
