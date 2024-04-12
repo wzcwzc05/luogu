@@ -1,65 +1,35 @@
 #include <bits/stdc++.h>
 using namespace std;
 using ll = long long;
-const int N = 1e3 + 10;
-int n, m, v[N][N], q;
-bool flag[N][N], mp[N][N];
-int dfs(int dep, int x, int y)
-{
-    if (!flag[x][y])
-    {
-        flag[x][y] = true;
-        int t = dep;
-        if (x + 1 <= n && mp[x + 1][y] == !mp[x][y])
-        {
-            int temp = dfs(dep + 1, x + 1, y);
-            t = max(t, temp);
-        }
-        if (x - 1 >= 1 && mp[x - 1][y] == !mp[x][y])
-        {
-            int temp = dfs(dep + 1, x - 1, y);
-            t = max(t, temp);
-        }
-        if (y + 1 <= m && mp[x][y + 1] == !mp[x][y])
-        {
-            int temp = dfs(dep + 1, x, y + 1);
-            t = max(t, temp);
-        }
-        if (y - 1 >= 1 && mp[x][y - 1] == !mp[x][y])
-        {
-            int temp = dfs(dep + 1, x, y - 1);
-            t = max(t, temp);
-        }
-        // cout << x << " " << y << " " << t << "\n";
-        v[x][y] = t;
-        return t;
+int d[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+bool mp[1010][1010], vis[1010][1010];
+int ans[1010][1010];
+int n, m;
+int dfs(int dep, int x, int y) {
+    vis[x][y] = 1;
+    ans[x][y] = dep;
+    for (int i = 0; i < 4; ++i) {
+        int dx = x + d[i][0];
+        int dy = y + d[i][1];
+        if (mp[dx][dy] == !mp[x][y] && !vis[dx][dy] && dx <= n && dy <= n &&
+            dx >= 1 && dy >= 1)
+            ans[x][y] = dfs(ans[x][y] + 1, dx, dy);
     }
-    else
-        return v[x][y];
+    return ans[x][y];
 }
-int main()
-{
-    // ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
-    cin >> n >> q;
-    m = n;
-    for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= m; j++)
-        {
-            char ch;
-            cin >> ch;
-            mp[i][j] = ch - '0';
-        }
-    for (int i = 1; i <= n; i++)
-        for (int j = 1; j <= m; j++)
-        {
-            if (!flag[i][j])
-                v[i][j] = dfs(1, i, j);
-        }
-    while (q--)
-    {
+int main() {
+    ios::sync_with_stdio(false), cin.tie(0), cout.tie(0);
+    cin >> n >> m;
+    char t;
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= n; ++j) cin >> t, mp[i][j] = t - '0';
+    for (int i = 1; i <= n; ++i)
+        for (int j = 1; j <= n; ++j)
+            if (!vis[i][j]) ans[i][j] = dfs(1, i, j);
+    for (int i = 1; i <= m; ++i) {
         int x, y;
         cin >> x >> y;
-        cout << v[x][y] << "\n";
+        cout << ans[x][y] << "\n";
     }
     return 0;
 }
