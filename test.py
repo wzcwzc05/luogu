@@ -1,19 +1,9 @@
-m = int(input())
-prize = list(map(int, input().split()))
-ans = [0]*10
-for i in range(m):
-    a = list(map(int, input().split()))
-    count = 0
-    for j in a:
-        if j in prize:
-            count += 1
-    ans[count] += 1
-for i in range(7, 0, -1):
-    print(ans[i], end=' ')
-print()
-
-a={
-    "name":"sb",
-    "age":17
-}
-a["age"]==17
+lst=eval(input())
+s=lst[0]+lst[1]+lst[2]
+t=0
+for i in range(3,len(lst)):
+    t=lst[i]+lst[i-1]+lst[i-2]
+    if (t>s):
+        ans=i-2
+        s=t
+print(lst[ans:ans+3])
