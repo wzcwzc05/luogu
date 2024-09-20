@@ -1,98 +1,106 @@
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
-#define LIST_INIT_SIZE 100  // 线性表存储空间的初始分配量
-#define LISTINCREMENT 10    // 线性表存储空间的分配增量
-#define ElemType int        // 线性表中元素的类型
-#define Status int  // 函数状态返回类型，0表示成功，1表示失败
-typedef struct {
-    ElemType *elem;  // 存储空间基址
-    int length;      // 线性表当前长度
-    int listsize;  // 线性表当前分配的存储空间容量（以sizeof(ElemType）为单位）
-} SqList;
-
-Status InitList_Sq(SqList &L) {
-    // 构造一个空的线性表
-    L.elem = (ElemType *)malloc(LIST_INIT_SIZE * sizeof(ElemType));
-    if (!L.elem) exit(OVERFLOW);  // 分配存储空间失败
-    L.length = 0;                 // 空表长度为零
-    L.listsize = LIST_INIT_SIZE;  // 当前分配的存储空间容量
-    return 0;
-}  // InitList_Sq
-Status Resize_Sq(SqList &L, int newsize) {
-    L.elem=(ElemType *)realloc(L.elem,newsize*sizeof(ElemType));
-    L.length=newsize;
-    L.listsize=
-}
-Status Destroy_Sq(SqList &L) {
-    free(L.elem);
-    L.length = 0;
-    L.listsize = 0;
-    return 0;
-}
-
-Status ListInsert_Sq(SqList &L, int i, ElemType e) {
-    // 在线性表L的第i个位置插入元素e
-    // i的合法值为1<=i<=L.length_Sq(L)+1
-    if (i < 1 || i > L.length + 1) return 1;  // i值不合法
-    if (L.length >= L.listsize) {
-        // 分配新的存储空间
-        ElemType *newbase = (ElemType *)realloc(
-            L.elem, (L.listsize + LISTINCREMENT) * sizeof(ElemType));
-        if (!newbase) exit(OVERFLOW);
-        L.elem = newbase;             // 新基址
-        L.listsize += LISTINCREMENT;  // 增加存储容量
+#include <cstdio>
+#include <cstdlib>
+#define TRUE 1
+#define FALSE 0
+#define OK 1
+#define ERROR 0
+#define OVERFLOW -2
+typedef int Status;
+typedef int ElemType;
+typedef struct LNode {
+    ElemType data;
+    struct LNode *next;
+} LNode, *LinkList;
+void CreateList_L(LinkList &L, int n) {
+    int i;
+    LinkList p;
+    L = (LinkList)malloc(sizeof(LNode));
+    L->next = NULL;
+    for (i = n; i > 0; --i) {
+        p = (LinkList)malloc(sizeof(LNode));
+        scanf("%d", &p->data);
+        p->next = L->next;
+        L->next = p;
     }
-    ElemType *p, *q;
-    q = &(L.elem[i - 1]);  // q为插入位置
-    for (p = &(L.elem[L.length - 1]); p >= q; --p) *(p + 1) = *p;
-    *q = e;
-    ++L.length;
-    return 0;
-}  // ListInsert_Sq
+}
 
-Status ListDelete_Sq(SqList &L, int i, ElemType &e) {
-    // 在顺序线性表L中删除第i个元素，并用e返回其值
-    // i的合法值为1<=i<=ListLength_Sq(L)
-    if ((i < 1) || (i > L.length)) return 1;  // i值不合法
-    ElemType *p, *q;
-    p = &(L.elem[i - 1]);       // p为被删除元素的位置
-    e = *p;                     // 被删除元素的值赋给e
-    q = L.elem + L.length - 1;  // 表尾元素的位置
-    for (++p; p <= q; ++p) *(p - 1) = *p;
-    --L.length;
-    return 0;
-}  // ListDelete_Sq
+Status OutputList_L(LinkList L) {
+    LinkList p = L->next;
+    if (!p) return ERROR;
+    while (p) {
+        printf("%d ", p->data);
+        p = p->next;
+    }
+    printf("\n");
+    return OK;
+}
 
-int LocateElem_Sq(SqList L, ElemType e, Status (*compare)(ElemType, ElemType)) {
-    // 在顺序线性表L中查找第1个值与e满足compare()的元素的位序
-    // 若找到，则返回其在L中的位序，否则返回0
-    ElemType i = 1;        // i的值为第1个元素的位序
-    ElemType *p = L.elem;  // p的初值为第1个元素的存储位置
-    while (i <= L.length && !(*compare)(*p++, e)) ++i;
-    if (i <= L.length)
-        return i;
-    else
-        return 0;
-}  // LocateElem_Sq
+Status GetElem_L(LinkList &L, int i, ElemType &e) {
+    int j;
+    LinkList p;
+    p = L->next;
+    j = 1;
+    while (p && j < i) {
+        p = p->next;
+        ++j;
+    }
+    if (!p || j > i) return ERROR;
+    e = p->data;
+    return OK;
+}
+
+Status ListInsert_L(LinkList &L, int i, ElemType e) {
+    LinkList p, s;
+    int j;
+    p = L;
+    j = 0;
+    while (p && j < i - 1) {
+        p = p->next;
+        ++j;
+    }
+    if (!p || j > i - 1) return ERROR;
+    s = (LinkList)malloc(sizeof(LNode));
+    s->data = e;
+    s->next = p->next;
+    p->next = s;
+    return OK;
+}
+
+Status ListDelete_L(LinkList &L, int i, ElemType &e) {
+    LinkList p, q;
+    int j;
+    p = L;
+    j = 0;
+    while (p->next && j < i - 1) {
+        p = p->next;
+        ++j;
+    }
+    if (!(p->next) || j > i - 1) return ERROR;
+    q = p->next;
+    p->next = q->next;
+    e = q->data;
+    free(q);
+    return OK;
+}
 
 int main() {
-    SqList L;
-    InitList_Sq(L);
-    printf("请输入元素个数\n");
-    int n;
-    scanf("%d", &n);
-    printf("请输入n个元素\n");
-    if (n <= LIST_INIT_SIZE) {
-        for (int i = 0; i < n; ++i) {
-            scanf("%d", &L.elem[i]);
-        };
-    } else {
-        // 分配新的存储空间
-        ElemType *newbase = (ElemType *)realloc(
-            L.elem, (L.listsize + LISTINCREMENT) * sizeof(ElemType));
-        if (!newbase) exit(OVERFLOW);
-        L.elem = newbase;             // 新基址
-        L.listsize += LISTINCREMENT;  // 增加存储容量
-    }
+    ElemType b, dd, d;
+    LinkList L;
+    printf("创建单链表,输入5个元素:\n");
+    CreateList_L(L, 5);
+    printf("输出单链表所有元素！\n");
+    OutputList_L(L);
+    printf("输出单链表第2个位置元素到dd!\n");
+    GetElem_L(L, 2, dd);
+    printf("dd=%d\n", dd);
+    printf("插入元素b:");
+    scanf("%d", &b);
+    printf("在单链表第4个位置插入%d!\n", b);
+    ListInsert_L(L, 4, b);
+    printf("输出插入操作后单链表所有元素！\n");
+    OutputList_L(L);
+    printf("删除单链表第3个位置的元素!\n");
+    ListDelete_L(L, 3, d);
+    printf("输出删除操作后单链表所有元素！\n");
+    OutputList_L(L);
 }
