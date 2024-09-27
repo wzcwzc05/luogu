@@ -1,40 +1,31 @@
 {
-<<<<<<< Updated upstream
-  "configurations": [
-    {
-      "name": "linux-gcc-x64",
-      "includePath": [
-        "${workspaceFolder}/**"
-      ],
-      "compilerPath": "g++",
-      "cStandard": "c17",
-      "cppStandard": "gnu++14",
-      "intelliSenseMode": "linux-gcc-x64",
-      "compilerArgs": [
-        ""
-      ]
-    }
-  ],
-  "version": 4
-=======
     "configurations": [
         {
-            "name": "Win32",
+            "name": "linux-gcc-x64",
             "includePath": [
-                "${workspaceFolder}/**",
-                "/usr/include/x86_64-linux-gnu/c++/9"
+                "${workspaceFolder}/**"
+            ],
+            "compilerPath": "D:/w64devkit/bin/g++.exe",
+            "cStandard": "c17",
+            "cppStandard": "gnu++14",
+            "intelliSenseMode": "linux-gcc-x64",
+            "compilerArgs": [
+                ""
+            ]
+        },
+        {
+            "name": "windows-gcc-x64",
+            "includePath": [
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "_DEBUG",
                 "UNICODE",
                 "_UNICODE"
             ],
-            "cStandard": "c17",
-            "cppStandard": "gnu++14",
-            "intelliSenseMode": "linux-gcc-x64",
-            "compilerPath": "/usr/bin/g++"
+            "compilerPath": "D:/w64devkit/bin/g++.exe",
+            "intelliSenseMode": "windows-gcc-x64"
         }
     ],
     "version": 4
->>>>>>> Stashed changes
 }
