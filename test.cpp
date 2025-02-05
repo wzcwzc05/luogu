@@ -1,26 +1,51 @@
 #include <bits/stdc++.h>
 using namespace std;
-map<char, int> mp1, mp2;
+const int N = 1515;
+long long l[N][N], in[N], ou[N], dp[N];
+int n, m, u, v, w, k, tmp;
+queue<int> q;
 int main() {
-    // abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ
-    string st = "ksjr{EcxvpdErSvcDgdgEzxqjql}";
-    int s = 0, temp = 0;
-    for (int ch = 'A', i = 0; ch <= 'Z'; ++ch, ++i) mp1[ch] = i;
-    for (int ch = 'a', i = 0; ch <= 'z'; ++ch, ++i) mp2[ch] = i;
-    for (auto &i : st) {
-        if (i >= 'a' && i <= 'z') {
-            temp = mp2[i];
-            temp = temp - s * 2 - 5;
-            while (temp < 0) temp += 26;
-            i = temp + 'a';
-        } else if (i >= 'A' && i <= 'Z') {
-            temp = mp1[i];
-            temp = temp - s * 2 - 5;
-            while (temp < 0) temp += 26;
-            i = temp + 'A';
-        }
-        s++;
+    cin >> n >> m;
+    for (int i = 0; i < m; i++) {
+        cin >> u >> v >> w;
+        l[u][v] = w;
+        in[v]++;
     }
-    cout << st << endl;
+    for (int i = 2; i <= n; i++) {
+        if (!in[i]) {
+            for (int j = 1; j <= n; j++) {
+                if (l[i][j]) {
+                    in[j]--;
+                }
+            }
+        }
+    }
+    q.push(1);
+    while (!q.empty()) {
+        tmp = q.front();
+        q.pop();
+        ou[k++] = tmp;
+        for (int i = 1; i <= n; i++) {
+            if (l[tmp][i]) {
+                in[i]--;
+                if (!in[i]) {
+                    q.push(i);
+                }
+            }
+        }
+    }
+    for (int i = 0; i <= n; i++) {
+        dp[i] = INT_MIN;
+    }
+    dp[1] = 0;
+    for (int i = 0; ou[i]; i++) {
+        for (int j = 1; j <= n; j++) {
+            if (l[j][ou[i]]) dp[ou[i]] = max(dp[ou[i]], l[j][ou[i]] + dp[j]);
+        }
+    }
+    if (dp[n] != INT_MIN)
+        cout << dp[n];
+    else
+        cout << -1;
     return 0;
 }
