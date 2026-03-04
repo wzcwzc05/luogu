@@ -7,7 +7,7 @@ ll calc_step(ll ori, ll offset) {
     ori -= offset % n;
     if (ori >= 0)
         return ori;
-    else
+    else/
         return n - abs(ori);
 }
 int main() {
