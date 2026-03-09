@@ -1,47 +1,50 @@
-/*3250. 通信网络*/
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
-int N,M,x,y,sum;
-bool a[1050][1050];
-int main(void)
-{
-    cin>>N>>M;
-    for(int i=1;i<=N;i++){
-        a[i][i]=true;
-    }
-    for(int i=0;i<M;i++){
-        cin>>x>>y;
-        a[x][y]=true;
-    }
-    for(int i=1;i<=N;i++){
-        for(int j=1;j<=N;j++){
-            if(i!=j&&a[i][j]==true){
-                for(int k=1;k<=N;k++){
-                    if(a[j][k]==true){
-                        a[i][k]=true;
-                    }
+string s;
+vector<bool> bos[26];  // 0为小写，1为大写字母
+map<int, char> mp;     // 非英文字母位置
+int main(void) {
+    while (getline(cin, s)) {
+        int n = s.size();
+        for (int i = 0; i < s.size();) {
+            if ((s[i] <= 'Z' && s[i] >= 'A') || (s[i] <= 'z' && s[i] >= 'a')) {
+                if (s[i] <= 'Z' && s[i] >= 'A') {
+                    bos[s[i] - 'A'].push_back(1);
+                    s[i] = s[i] - 'A' + 'a';
+                    i++;
+                } else if (s[i] <= 'z' && s[i] >= 'a') {
+                    bos[s[i] - 'a'].push_back(0);
+                    i++;
+                }
+            } else {
+                mp[i + mp.size()] = s[i];
+                s.erase(s.begin() + i);
+            }
+        }
+        sort(s.begin(), s.end());
+        int j = 0;  // vector中的第几个
+        char flag = 'a';
+        for (int i = 0; i < n; i++) {
+            if (mp.find(i) != mp.end()) {
+                s.insert(i, 1, mp[i]);
+            } else {
+                if (s[i] != flag) {
+                    j = 0;
+                }
+                if (j < bos[s[i] - 'a'].size() && bos[s[i] - 'a'][j] == 1) {
+                    flag = s[i];
+                    s[i] = s[i] - 'a' + 'A';
+                    j++;
+                } else if (j < bos[s[i] - 'a'].size() &&
+                           bos[s[i] - 'a'][j] == 0) {
+                    j++;
+                    flag = s[i];
                 }
             }
         }
+        cout << s << '\n';
+        memset(bos, 0, sizeof(bos));
+        mp.clear();
     }
-    for(int i=1;i<=N;i++){
-        int tmp=0;
-        for(int j=1;j<=N;j++){
-            if(a[i][j]==true){
-                tmp++;
-            }
-        }
-        if(tmp==N) sum++;
-        else{
-            tmp=0;
-            for(int j=1;j<=N;j++){
-                if(a[j][i]==true){
-                    tmp++;
-                }
-            }
-            if(tmp==N) sum++;
-        }
-    }
-    cout<<sum;
     return 0;
 }
