@@ -3,9 +3,9 @@ using namespace std;
 using ll = long long;
 const int N = 1e4 + 10;
 ll n, m, fa[N];
-int find(int x) {
+int findf(int x) {
     if (fa[x] != x)
-        return fa[x] = find(fa[x]);
+        return fa[x] = findf(fa[x]);
     else
         return x;
 }
@@ -17,9 +17,9 @@ int main() {
     for (int i = 1; i <= m; ++i) {
         cin >> opt >> x >> y;
         if (opt == 1) {
-            fa[find(x)] = find(y);
+            fa[findf(x)] = findf(y);
         } else if (opt == 2) {
-            if (find(x) == find(y))
+            if (findf(x) == findf(y))
                 cout << "Y\n";
             else
                 cout << "N\n";

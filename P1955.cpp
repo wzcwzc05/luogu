@@ -4,10 +4,10 @@ using ll = long long;
 map<int, int> mpe;
 vector<pair<int, int>> v;
 int q, n, x, y, opt;
-int find(int x) { return mpe[x] == x ? x : mpe[x] = find(mpe[x]); }
-void merge(int x, int y) { mpe[find(x)] = find(y); }
+int findf(int x) { return mpe[x] == x ? x : mpe[x] = findf(mpe[x]); }
+void merge(int x, int y) { mpe[findf(x)] = findf(y); }
 void print() {
-    for (int i = 1; i <= n; ++i) cout << find(i) << " ";
+    for (int i = 1; i <= n; ++i) cout << findf(i) << " ";
     cout << "\n";
 }
 void solve() {
@@ -25,7 +25,7 @@ void solve() {
         }
     }
     for (auto &i : v) {
-        if (find(i.first) == find(i.second)) {
+        if (findf(i.first) == findf(i.second)) {
             cout << "NO\n";
             // print();
             return;
